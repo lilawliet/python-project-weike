@@ -48,3 +48,9 @@ print(apple._Fruit__outputColor)		# 使用特殊方式调用类的私有方法
 print(apple.getName())					# 测试classmethod step 01
 orange = Orange()
 print(orange.getName())					# 测试classmethod step 02
+
+# 多态
+print('apple is fruit',isinstance(apple, Fruit))
+print('apple is orange',isinstance(apple, Orange))
+print('orange is fruit',isinstance(orange, Fruit))
+print('orange is orange',isinstance(orange, Orange))
