@@ -1,15 +1,17 @@
+# -*- coding:utf-8 -*-
+
 import requests
 import re
 
 # 设置默认peizhi
 MaxSearchPage = 20					# 搜索页数
 CurrentPage = 0						# 当前正在搜索的页数
-DefaultPath = 'pictures'			# 默认存储位置
+DefaultPath = '/media/sf_vm-share/ppwk/07_baidu_crawler/'			# 默认存储位置
 NeedSave = 0						# 是否需要存储
 
 # 图片链接正则和下一页的链接正则
 def imageFiler(content):			# 通过正则表达式获取页面图片地址数组
-	return re.findall('"objURL":"(.*?)", content, re.S')
+	return re.findall('"objURL":"(.*?)"', content, re.S)
 
 def nextSource(content):			# 通过正则获取下一页网址
 	next = re.findall('<div id="page".*<a href="(.*?)" class="n">', content, re.S)[0]
@@ -37,6 +39,8 @@ def spidler(source):
 			# 创建图片保存路径
 			imageUrl = imageUrl.replace('/', '').replace(':', '').replace('?','')
 			pictureSavePath = DefaultPath + imageUrl
+
+			print pictureSavePath
 			fp = open(pictureSavePath, 'wb')	# 以二进制写入
 			fp.write(picture.content)
 			fp.close()
@@ -48,12 +52,12 @@ def spidler(source):
 				spidler('http://image.baidu.com' + nextSource(content))
 
 # 爬虫方法开启
-def beginSearch(page=1, save=0, savePath='picture/'):
+def beginSearch(page=1, save=0, savePath='/media/sf_vm-share/ppwk/07_baidu_crawler/'):
 	global MaxSearchPage, NeedSave, DefaultPath
 	MaxSearchPage = page
 	NeedSave = save
 	DefaultPath = savePath
-	key = input('please input you want search:')
+	key = raw_input('please input you want search:')			# python2.raw_input == python3.input
 	StartSource = 'http://image.baidu.com/search/flip?tn=baiduimage&ie=ute-8&word=' + str(key) +'&ct=201326592&v=flip'
 
 	# 分析链接可以得到，替换其 word 值后面的数据来搜索关键词
