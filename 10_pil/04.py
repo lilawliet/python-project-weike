@@ -16,37 +16,44 @@ def gene_text():
 	# source=list(String,letters)
 	# source=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 	source = list(string.ascii_letters)
-	for index in ragne(0, 10):
+	for index in range(0, 10):
 		source.append(str(index))
 	return ''.join(random.sample(source, number))  # number 是生成验证码的位数
 
 
 # 用来绘制干扰线
-def gene_line(draw, wigth, height):
+def gene_line(draw, width, height):
 	begin = (random.randint(0, width), random.randint(0, height))
-	end = (random.randint(0, width), random.randingt(0, height))
+	end = (random.randint(0, width), random.randint(0, height))
 	draw.line([begin, end], fill=linecolor)
 
 # 生成验证码
 def gene_code():
 	width, height = size
+	# 初始化图片
 	image = Image.new("RGBA", (width, height), bgcolor)
+	# 验证码字体
 	font =ImageFont.truetype(font_path, 25)
-	darw = ImageDraw.Draw(image)
+	# 创建画笔
+	draw = ImageDraw.Draw(image)
+	# 生成字符串
 	text = gene_text()
+
 	font_width, font_height = font.getsize(text)
 
-	draw.text(((width - font_width)/number, (height - font_height)/ number), text, font-font, fill=fontcolor)
+	draw.text(((width - font_width)/number, (height - font_height)/ number), text, font=font, fill=fontcolor)
 
 	if draw_line:
-		gene_line(draw.width, height)
+		gene_line(draw, width, height)
 
+	# 创建扭曲
 	image = image.transform((width + 20, height + 10), Image.AFFINE, (1,-0.3, 0, -0.1, 1,0), Image.BILINEAR)
 
+	# 滤镜，边界加强
 	image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
 
 	image.save('04.png')
 
 
-if  __name__ == '__name__'：
+if  __name__ == '__main__':
 	gene_code()
