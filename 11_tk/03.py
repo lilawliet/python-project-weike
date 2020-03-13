@@ -1,5 +1,15 @@
 '''
 	画线
+	create_line(
+	x0,
+	y0,
+	x1,
+	y1,
+	...,
+	xn,
+	yn,
+	选项
+	)
 '''
 
 from tkinter import *

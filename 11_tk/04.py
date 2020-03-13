@@ -1,5 +1,15 @@
 '''
 	绘制矩形
+	create_retangle{
+	矩形左上角x坐标,
+	矩形左上角y坐标,
+	矩形右下角x坐标,
+	矩形右下角y坐标,
+	选项,
+	dash(指定边框为虚线),
+	stipple(自动逸画刷填充矩形),
+	...
+	}
 '''
 
 from tkinter import *
